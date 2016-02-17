@@ -1,10 +1,12 @@
 defmodule ExAlgebra.Vector do
-	import :math, only: [sqrt: 1]
 
 	def magnitude(vector) do
-	   vector 
-	   |> List.foldl(0, fn(element, sum_of_squares) -> element * element + sum_of_squares end)
-	   |> sqrt
+		import :math, only: [sqrt: 1]
+	 	vector |> sqr_magnitude |> sqrt
+	end
+
+	def sqr_magnitude(vector) do
+		vector |> List.foldl(0, fn(element, sum_of_squares) -> element * element + sum_of_squares end)
 	end
 
 	def normalize(vector) do

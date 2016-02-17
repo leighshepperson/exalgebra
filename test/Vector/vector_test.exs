@@ -17,7 +17,7 @@ defmodule ExAlgebra.VectorTest do
 
 	test "Returns the square magnitude of a vector" do
 		input = [1, 2, 3, 4]
-		expected = [1, 4, 9, 16]
+		expected = 30
 		assert sqr_magnitude(input) == expected
 	end
 
