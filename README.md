@@ -1,0 +1,2 @@
+# exalgebra
+Elixir algebra library
