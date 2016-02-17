@@ -35,6 +35,6 @@ config :eye_drops,
       id: :unit_tests,
       name: "Unit tests",
       cmd: "mix test",
-      paths: [ "test/*"]
+      paths: [ "test/*", "lib/*"]
     }
   ]
