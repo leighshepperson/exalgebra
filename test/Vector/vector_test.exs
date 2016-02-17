@@ -15,6 +15,12 @@ defmodule ExAlgebra.VectorTest do
 		assert approximate_evaluation(normalize(input)) == expected
 	end
 
+	test "Returns the square magnitude of a vector" do
+		input = [1, 2, 3, 4]
+		expected = [1, 4, 9, 16]
+		assert sqr_magnitude(input) == expected
+	end
+
 	defp approximate_evaluation([h|t]) do
 		[approximate_evaluation(h) | approximate_evaluation(t)]
 	end
