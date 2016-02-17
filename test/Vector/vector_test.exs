@@ -11,7 +11,7 @@ defmodule ExAlgebra.VectorTest do
 
 	test "Returns the normalized vector" do
 		input = [1, 2, 3, 4]
-		expected = [0.1825741858, 0.3651483716, 0.547722557, 0.7302967433]
+		expected = [0.1825741858, 0.3651483717, 0.5477225575, 0.7302967433]
 		assert approximate_evaluation(normalize(input)) == expected
 	end
 
@@ -22,6 +22,8 @@ defmodule ExAlgebra.VectorTest do
 	defp approximate_evaluation(function_to_evaluate) do
 		function_to_evaluate |> approximate_evaluation(@precision)
 	end
+
+	defp approximate_evaluation([], _), do: []
 
 	defp approximate_evaluation([h|t], precision) do
 		[approximate_evaluation(h, precision) | approximate_evaluation(t, precision)]
