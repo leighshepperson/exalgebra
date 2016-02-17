@@ -1,0 +1,2 @@
+%{"eye_drops": {:hex, :eye_drops, "1.0.1"},
+  "fs": {:hex, :fs, "0.9.2"}}

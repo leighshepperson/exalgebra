@@ -28,3 +28,13 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
+
+config :eye_drops, 
+  tasks: [
+    %{
+      id: :unit_tests,
+      name: "Unit tests",
+      cmd: "mix test",
+      paths: [ "test/*"]
+    }
+  ]
