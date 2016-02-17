@@ -21,6 +21,13 @@ defmodule ExAlgebra.VectorTest do
 		assert sqr_magnitude(input) == expected
 	end
 
+	test "Returns the dot product of two vectors" do
+		vector_one = [1, 2, 3]
+		vector_two = [4, 5, 6]
+		expected = 32
+		assert dot(vector_one, vector_two) == expected
+	end
+
 	defp approximate_evaluation([h|t]) do
 		[approximate_evaluation(h) | approximate_evaluation(t)]
 	end
