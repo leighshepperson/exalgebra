@@ -46,7 +46,7 @@ defmodule ExAlgebra.VectorTest do
 		vector = [1, 2, 3]
 		scalar = 2.5
 		expected = [2.5, 5, 7.5]
-		assert multiply(vector, scalar) == expected
+		assert scalar_multiply(vector, scalar) == expected
 	end
 
 	test "Returns the distance between two vectors" do
@@ -72,26 +72,26 @@ defmodule ExAlgebra.VectorTest do
 		vector_one = [1, 2, 4, 0]
 		vector_two = [0, 1, 1, 0]
 		expected = [2/7, 4/7, 8/7, 0]
-		assert approximate_evaluation(projection(vector_one, vector_two)) == approximate_evaluation(expected)
+		assert approximate_evaluation(project(vector_one, vector_two)) == approximate_evaluation(expected)
 	end
 
 	test "Creates an orthogonal vector from a vector and a set of linearly independant orthogonal vectors" do
 		vector =  [0, 1, 1, 0]
 		vectors = [[1, 2, 4, 0]]
 		expected = [-2/7, 3/7, -1/7, 0]
-		assert approximate_evaluation(orthogonal_vector(vector, vectors)) == approximate_evaluation(expected)
+		assert approximate_evaluation(create_orthogonal_vector(vector, vectors)) == approximate_evaluation(expected)
 	end
 
 	test "Returns an orthogonal basis of a set of linearly independant vectors" do
 		vectors = [[1, 2, 4, 0], [0, 1, 1, 0], [0, 3, 1, 4]]
 		expected = [[1, 2, 4, 0], [-2/7, 3/7, -1/7, 0], [2/3, 1/3, -1/3, 4]]
-		assert approximate_evaluation(orthogonal_basis(vectors)) == approximate_evaluation(expected)
+		assert approximate_evaluation(create_orthogonal_basis(vectors)) == approximate_evaluation(expected)
 	end
 
 	test "Returns an orthonormal basis from a set of linearly independant vectors" do	
 		vectors = [[1, 1, 1], [2, 1, 0], [5, 1, 3]]
 		expected = [[0.57735026919, 0.57735026919, 0.57735026919], [0.70710678118, 0, -0.70710678118], [0.40824829046, -0.81649658092, 0.40824829046]]
-		assert approximate_evaluation(orthonormal_basis(vectors)) == approximate_evaluation(expected)
+		assert approximate_evaluation(create_orthonormal_basis(vectors)) == approximate_evaluation(expected)
 	end
 
 	defp approximate_evaluation([h|t]) do
