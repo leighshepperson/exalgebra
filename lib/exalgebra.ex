@@ -1,2 +1,0 @@
-defmodule ExAlgebra do
-end

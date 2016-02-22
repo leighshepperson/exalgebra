@@ -75,23 +75,33 @@ defmodule ExAlgebra.VectorTest do
 		assert approximate_evaluation(project(vector_one, vector_two)) == approximate_evaluation(expected)
 	end
 
-	test "Creates an orthogonal vector from a vector and a set of linearly independant orthogonal vectors" do
+	test "Creates an orthogonal vector from a vector and a set of linearly independent orthogonal vectors" do
 		vector =  [0, 1, 1, 0]
 		vectors = [[1, 2, 4, 0]]
 		expected = [-2/7, 3/7, -1/7, 0]
 		assert approximate_evaluation(create_orthogonal_vector(vector, vectors)) == approximate_evaluation(expected)
 	end
 
-	test "Returns an orthogonal basis of a set of linearly independant vectors" do
+	test "Returns an orthogonal basis of a set of linearly independent vectors" do
 		vectors = [[1, 2, 4, 0], [0, 1, 1, 0], [0, 3, 1, 4]]
 		expected = [[1, 2, 4, 0], [-2/7, 3/7, -1/7, 0], [2/3, 1/3, -1/3, 4]]
 		assert approximate_evaluation(create_orthogonal_basis(vectors)) == approximate_evaluation(expected)
 	end
 
-	test "Returns an orthonormal basis from a set of linearly independant vectors" do	
+	test "Returns an orthonormal basis from a set of linearly independent vectors" do	
 		vectors = [[1, 1, 1], [2, 1, 0], [5, 1, 3]]
 		expected = [[0.57735026919, 0.57735026919, 0.57735026919], [0.70710678118, 0, -0.70710678118], [0.40824829046, -0.81649658092, 0.40824829046]]
 		assert approximate_evaluation(create_orthonormal_basis(vectors)) == approximate_evaluation(expected)
+	end
+
+	test "Retrns true if a set of vectors are linearly independent" do
+		vectors = [[1, 1, 1], [2, 1, 0], [5, 1, 3]]
+		assert is_linearly_independent?(vectors)
+	end
+
+	test "Retrns false if a set of vectors are linearly dependent" do
+		vectors = [[2, 3, 5], [-1, -4, -10], [1, -2, -8]]
+		assert !is_linearly_independent?(vectors)
 	end
 
 	defp approximate_evaluation([h|t]) do

@@ -30,6 +30,14 @@ defmodule ExAlgebra.MatrixTest do
 		assert subtract(matrix_one, matrix_two) == expected
 	end
 
+	test "Returns the multiplication of a 1 x 1 matrix by a scalar" do
+		matrix = [[1]]
+		scalar = 2.5
+		expected = [[2.5]]
+
+		assert scalar_multiply(matrix, scalar) == expected
+	end
+
 	test "Returns the multiplication of a matrix by a scalar" do
 		matrix = [[1, 3, 1], [1, 0, 0]]
 		scalar = 2.5
@@ -91,5 +99,82 @@ defmodule ExAlgebra.MatrixTest do
 		assert multiply(matrix_one, matrix_two) == expected
 	end
 	
-	
+	test "Removes the ith row of a matrix" do
+		matrix =  [[2, 3, 4], [1, 0, 0], [3, 4, 5]]
+		
+		assert remove_row(matrix, 1) == [[1, 0, 0], [3, 4, 5]]
+		assert remove_row(matrix, 2) == [[2, 3, 4], [3, 4, 5]]
+		assert remove_row(matrix, 3) == [[2, 3, 4], [1, 0, 0]]
+	end
+
+	test "Removes the ith column of a matrix" do
+		matrix =  [[2, 3, 4], [1, 0, 0], [3, 4, 5]]
+		
+		assert remove_column(matrix, 1) == [[3, 4], [0, 0], [4, 5]]
+		assert remove_column(matrix, 2) == [[2, 4], [1, 0], [3, 5]]
+		assert remove_column(matrix, 3) == [[2, 3], [1, 0], [3, 4]]
+	end
+
+	test "Returns the (i, j) submatrix of a 3 x 3 matrix" do
+		matrix =  [[2, 3, 4], [1, 0, 0], [3, 4, 5]]
+
+		assert submatrix(matrix, 1, 1) == [[0, 0], [4, 5]]
+		assert submatrix(matrix, 1, 2) == [[1, 0], [3, 5]]
+		assert submatrix(matrix, 1, 3) == [[1, 0], [3, 4]]
+		assert submatrix(matrix, 2, 3) == [[2, 3], [3, 4]]
+		assert submatrix(matrix, 3, 3) == [[2, 3], [1, 0]]
+	end
+
+	test "Returns the (i, j) minor of a 3 x 3 matrix" do
+		matrix =  [[2, 3, 4], [1, 0, 0], [3, 4, 5]]
+
+		assert minor(matrix, 1, 1) == 0
+		assert minor(matrix, 1, 2) == 5
+		assert minor(matrix, 1, 3) == 4
+		assert minor(matrix, 2, 3) == -1
+		assert minor(matrix, 3, 3) == -3
+	end
+
+	test "Returns the (i, j) cofactor of a 3 x 3 matrix" do
+		matrix =  [[2, 3, 4], [1, 0, 0], [3, 4, 5]]
+
+		assert cofactor(matrix, 1, 1) == 0
+		assert cofactor(matrix, 1, 2) == -5
+		assert cofactor(matrix, 1, 3) == 4
+		assert cofactor(matrix, 2, 3) == 1
+		assert cofactor(matrix, 3, 3) == -3
+	end
+
+	test "Computes the determinant of a 2 x 2 matrix" do
+		matrix = [[1, 2], [3, 4]]
+		expected = -2
+
+		assert det(matrix) == expected
+	end
+
+	test "Computes the determinant of a 3 x 3 matrix" do
+		matrix =  [[6, 1, 1], [4, -2, 5], [2, 8, 7]]
+
+		assert det(matrix) == -306
+	end
+
+	test "Computes the determinant of a 5 x 5 matrix" do
+		matrix =  [[5, 2, 0, 0, -2], [0, 1, 4, 3, 2], [0, 0, 2, 6, 3], [0, 0, 3, 4, 1], [0, 0, 0, 0, 2]]
+
+		assert det(matrix) == -100
+	end
+
+	test "Returns the trace of a 1 x 1 matrix" do
+		matrix = [[1]]
+		expected = 1
+		assert trace(matrix) == expected
+	end
+
+	test "Returns the trace of a 3 x 3 matrix" do
+		matrix = [[6, 1, 1], [4, -2, 5], [2, 8, 7]]
+
+		expected = 11
+		assert trace(matrix) == expected
+	end
+
 end

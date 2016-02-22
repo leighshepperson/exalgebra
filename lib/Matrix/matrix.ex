@@ -1,5 +1,6 @@
 defmodule ExAlgebra.Matrix do
 	alias ExAlgebra.Vector, as: Vector
+	import :math, only: [pow: 2]
 
 	def size([first_row | _] = matrix) do
 		%{rows: length(matrix), columns: length(first_row)}
@@ -29,6 +30,32 @@ defmodule ExAlgebra.Matrix do
 
 	def multiply(matrix_one, matrix_two) do
 		naive_multiply(matrix_one, transpose(matrix_two))
+	end
+
+	def submatrix(matrix, i, j) do
+		matrix |> remove_row(i) |> remove_column(j) 
+	end
+
+	def remove_column(matrix, index) do
+		matrix |> Enum.map(&(List.delete_at(&1, index - 1)))
+	end
+
+	def remove_row(matrix, index) do
+		matrix |> List.delete_at(index - 1)
+	end
+
+	def det([[a,b], [c,d]]), do: a * d - b * c
+
+	def det([first_row | _] = matrix) do
+		first_row |> Enum.with_index |> List.foldl(0, fn({element, index}, acc) -> acc +  element * cofactor(matrix, 1, index + 1) end)
+	end
+
+	def cofactor(matrix, i, j), do: minor(matrix, i, j) * pow(-1, i + j)
+
+	def minor(matrix, i, j), do: submatrix(matrix, i, j) |> det
+
+	def trace(matrix) do
+		matrix |> Enum.with_index |> Enum.map(fn({row, index}) -> Enum.at(row, index) end) |> Enum.sum
 	end
 
 	defp naive_multiply(matrix_one, matrix_two) do

@@ -1,5 +1,6 @@
 defmodule ExAlgebra.Vector do
 	import :math, only: [sqrt: 1]
+	alias ExAlgebra.Matrix, as: Matrix
 
 	def add([], []), do: []
 
@@ -48,5 +49,7 @@ defmodule ExAlgebra.Vector do
 	def create_orthonormal_basis(linearly_independent_vectors) do
 		linearly_independent_vectors |> create_orthogonal_basis |> Enum.map(&normalize(&1))
 	end
+
+	def is_linearly_independent?(vectors), do: Matrix.det(vectors) != 0
 
 end
