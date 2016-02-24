@@ -1,6 +1,6 @@
 # ExAlgebra
 
-ExAlgebra is a mathematics library that features common functions used in linear algebra.
+ExAlgebra is a mathematics library that contains functions used in linear algebra.
 
 ## Installation
 

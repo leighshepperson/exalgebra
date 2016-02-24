@@ -25,7 +25,7 @@ defmodule ExAlgebra.Mixfile do
 
   defp description do
     """
-    ExAlgebra is a mathematics library that features common functions used in linear algebra.
+    ExAlgebra is a mathematics library that contains functions used in linear algebra.
     """
   end
 
