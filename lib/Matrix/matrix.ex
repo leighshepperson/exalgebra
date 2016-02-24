@@ -1,25 +1,6 @@
 defmodule ExAlgebra.Matrix do
   @moduledoc """
-  *ExAlgebra.Matrix* is a library that consists of functions used in matrix
-  algebra. 
-
-  A matrix is represented as a list (the rows) of lists (the columns) of numnbers.
-  There is no explicit type checking: the user is responsible for the input.
-
-  ## Examples
-    Returns the addition of two matrices.
-
-    iex> matrix = [[1, 3, 1], [1, 0, 0]]
-      [[1, 3, 1], [1, 0, 0]]
-    iex> matrix |> ExAlgebra.Matrix.add [[0, 0, 5], [7, 5, 0]]
-      [[1, 3, 6], [8, 5, 0]]
-
-    Returns the determinent of a matrix.
-
-    iex> matrix = [[6, 1, 1], [4, -2, 5], [2, 8, 7]]
-      [[6, 1, 1], [4, -2, 5], [2, 8, 7]]
-    iex> matrix |> ExAlgebra.Matrix.det
-      -306
+  *ExAlgebra.Matrix* contains functions used in matrix algebra.
   """
   
   import :math, only: [pow: 2]
@@ -27,9 +8,11 @@ defmodule ExAlgebra.Matrix do
 
   @doc """
     Returns the size of a matrix.
-    #### Examples
+    ##### Examples
+
         iex> matrix = [[1, 2], [3, 4], [4, 3]]
         [[1, 2], [3, 4], [4, 3]]
+
         iex> matrix |> ExAlgebra.Matrix.size
         %{rows: 3, columns: 2}
   """
@@ -40,9 +23,11 @@ defmodule ExAlgebra.Matrix do
 
   @doc """
     Returns the addition of two matrices.
-    #### Examples
+    ##### Examples
+
         iex> matrix = [[1, 3, 1], [1, 0, 0]]
         [[1, 3, 1], [1, 0, 0]]
+
         iex> matrix |> ExAlgebra.Matrix.add [[0, 0, 5], [7, 5, 0]]
         [[1, 3, 6], [8, 5, 0]]
   """
@@ -54,9 +39,11 @@ defmodule ExAlgebra.Matrix do
 
   @doc """
     Returns the subtraction of two matrices.
-    #### Examples
+    ##### Examples
+
         iex> matrix = [[1, 3, 1], [1, 0, 0]]
         [[1, 3, 1], [1, 0, 0]]
+
         iex> matrix |> ExAlgebra.Matrix.subtract [[0, 0, 5], [7, 5, 0]]
         [[1, 3, -4], [-6, -5, 0]]
   """
@@ -68,9 +55,11 @@ defmodule ExAlgebra.Matrix do
 
   @doc """
     Returns the multiple of a matrix by a scalar.
-    #### Examples
+    ##### Examples
+
         iex> matrix = [[1, 3, 1], [1, 0, 0]]
         [[1, 3, 1], [1, 0, 0]]
+
         iex> matrix |> ExAlgebra.Matrix.scalar_multiply 2.5
         [[2.5, 7.5, 2.5], [2.5, 0, 0]]
   """
@@ -82,9 +71,11 @@ defmodule ExAlgebra.Matrix do
 
   @doc """
     Returns the transpose of a matrix.
-    #### Examples
+    ##### Examples
+
         iex> matrix = [[1, 3, 1], [1, 0, 0]]
         [[1, 3, 1], [1, 0, 0]]
+
         iex> matrix |> ExAlgebra.Matrix.transpose
         [[1, 0], [2, -6], [3, 7]]
   """
@@ -94,10 +85,12 @@ defmodule ExAlgebra.Matrix do
   end
 
   @doc """
-    Returns the multiplication of a matrix by another matrix.
-    #### Examples
+    Returns the multiplication of two matrices.
+    ##### Examples
+
         iex> matrix = [[2, 3, 4], [1, 0, 0]]
         [[2, 3, 4], [1, 0, 0]]
+
         iex> matrix |> ExAlgebra.Matrix.multiply [[0, 1000], [1, 100], [0, 10]]
         [[3, 2340], [0, 1000]]
   """
@@ -108,9 +101,11 @@ defmodule ExAlgebra.Matrix do
 
   @doc """
     Returns the (i, j) submatrix of a 3 x 3 matrix.
-    #### Examples
+    ##### Examples
+
         iex> matrix = [[2, 3, 4], [1, 0, 0], [3, 4, 5]]
         [[[2, 3, 4], [1, 0, 0], [3, 4, 5]]
+
         iex> matrix |> ExAlgebra.Matrix.submatrix(2, 3)
         [[2, 3], [3, 4]]
   """
@@ -121,9 +116,11 @@ defmodule ExAlgebra.Matrix do
 
   @doc """
     Removes the ith column of a matrix.
-    #### Examples
+    ##### Examples
+
         iex> matrix = [[2, 3, 4], [1, 0, 0], [3, 4, 5]]
         [[2, 3, 4], [1, 0, 0], [3, 4, 5]]
+
         iex> matrix |> ExAlgebra.Matrix.remove_column(2)
         [[2, 4], [1, 0], [3, 5]]
   """
@@ -134,9 +131,11 @@ defmodule ExAlgebra.Matrix do
 
   @doc """
     Removes the ith row of a matrix.
-    #### Examples
+    ##### Examples
+
         iex> matrix = [[2, 3, 4], [1, 0, 0], [3, 4, 5]]
         [[2, 3, 4], [1, 0, 0], [3, 4, 5]]
+
         iex> matrix |> ExAlgebra.Matrix.remove_row(2)
         [[2, 3, 4], [3, 4, 5]]
   """
@@ -146,10 +145,12 @@ defmodule ExAlgebra.Matrix do
   end
 
   @doc """
-    Returns the determinent of a matrix.
-    #### Examples
+    Returns the determinant of a matrix.
+    ##### Examples
+
         iex> matrix = [[6, 1, 1], [4, -2, 5], [2, 8, 7]]
         [[6, 1, 1], [4, -2, 5], [2, 8, 7]]
+
         iex> matrix |> ExAlgebra.Matrix.det
         -306
   """
@@ -163,9 +164,11 @@ defmodule ExAlgebra.Matrix do
 
   @doc """
     Returns the (i, j) cofactor of a matrix.
-    #### Examples
+    ##### Examples
+
         iex> matrix = [[2, 3, 4], [1, 0, 0], [3, 4, 5]]
         [[2, 3, 4], [1, 0, 0], [3, 4, 5]]
+
         iex> matrix |> ExAlgebra.Matrix.cofactor(1, 2)
         -5
   """
@@ -174,9 +177,10 @@ defmodule ExAlgebra.Matrix do
 
   @doc """
     Returns the (i, j) minor of a matrix.
-    #### Examples
+    ##### Examples
         iex> matrix = [[2, 3, 4], [1, 0, 0], [3, 4, 5]]
         [[2, 3, 4], [1, 0, 0], [3, 4, 5]]
+
         iex> matrix |> ExAlgebra.Matrix.minor(1, 2)
         5
   """
@@ -185,9 +189,10 @@ defmodule ExAlgebra.Matrix do
 
   @doc """
     Returns the trace of a matrix.
-    #### Examples
+    ##### Examples
         iex> matrix = [[6, 1, 1], [4, -2, 5], [2, 8, 7]]
         [[6, 1, 1], [4, -2, 5], [2, 8, 7]]
+
         iex> matrix |> ExAlgebra.Matrix.trace
         11
   """

@@ -1,12 +1,10 @@
 # ExAlgebra
 
-ExAlgebra is a library collecting common functions used in linear algebra. The current implementations are naive and are not guaranteed to be efficient.
-
-Vectors are represented by lists of numbers, i.e. [1, 2, 3]. Matrices are represented by a list (rows) of lists(columns) of numbers, i.e. [[1, 2, 3], [3, 3, 4], [3, 5, 6]].
+ExAlgebra is a mathematics library that features common functions used in linear algebra.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+The package is [available in Hex](https://hex.pm/packages/exalgebra), and it can be installed as:
 
   1. Add exalgebra to your list of dependencies in `mix.exs`:
 
