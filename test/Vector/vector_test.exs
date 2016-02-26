@@ -1,6 +1,9 @@
 defmodule ExAlgebra.VectorTest do
-	use ExUnit.Case
+	use ExUnit.Case, async: true
+  doctest ExAlgebra.Vector
+
 	import ExAlgebra.Vector
+	import :math, only: [sqrt: 1]
 	@precision 10
 
 	test "Returns the magnitude of a vector" do
@@ -68,11 +71,23 @@ defmodule ExAlgebra.VectorTest do
 		assert !is_orthogonal?(vector_one, vector_two)
 	end
 
-	test "Returns the projection of vector_one on vector_two" do
-		vector_one = [1, 2, 4, 0]
-		vector_two = [0, 1, 1, 0]
+	test "Returns the scalar projection of vector_one on vector_two" do
+		vector_one = [4, 1]
+		vector_two = [2, 3]
+		expected = 11/ sqrt(13)
+		assert scalar_projection(vector_one, vector_two) == expected
+	end
+
+	test "Returns the vector projection of vector_one on vector_two" do
+		vector_one = [4, 1]
+		vector_two = [2, 3]
+		expected = [22 / 13, 33 / 13]
+		assert vector_projection(vector_one, vector_two) == expected
+
+		vector_one = [0, 1, 1, 0]
+		vector_two = [1, 2, 4, 0]
 		expected = [2/7, 4/7, 8/7, 0]
-		assert approximate_evaluation(project(vector_one, vector_two)) == approximate_evaluation(expected)
+		assert vector_projection(vector_one, vector_two) == expected
 	end
 
 	test "Creates an orthogonal vector from a vector and a set of linearly independent orthogonal vectors" do
