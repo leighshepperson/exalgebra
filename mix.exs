@@ -3,7 +3,7 @@ defmodule ExAlgebra.Mixfile do
 
   def project do
     [app: :exalgebra,
-     version: "0.0.2",
+     version: "0.0.3",
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -25,7 +25,7 @@ defmodule ExAlgebra.Mixfile do
 
   defp description do
     """
-    ExAlgebra is a mathematics library that contains functions used in linear algebra.
+    Linear Algebra library.
     """
   end
 

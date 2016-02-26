@@ -1,17 +1,18 @@
 defmodule ExAlgebra.MatrixTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
+  doctest ExAlgebra.Matrix
   import ExAlgebra.Matrix
 
-  test "Returns the size of a 1 x 1 matrix" do
+  test "Returns the rank of a 1 x 1 matrix" do
     input = [[3]]
     expected = %{rows: 1, columns: 1}
-    assert size(input) == expected
+    assert rank(input) == expected
   end
 
-  test "Returns the size of a 3 x 2 matrix" do
+  test "Returns the rank of a 3 x 2 matrix" do
     input = [[1, 2], [3, 4], [4, 3]]
     expected = %{rows: 3, columns: 2}
-    assert size(input) == expected
+    assert rank(input) == expected
   end
 
   test "Returns the addition of two 2 x 3 matrices" do

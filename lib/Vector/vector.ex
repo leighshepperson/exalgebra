@@ -5,7 +5,7 @@ defmodule ExAlgebra.Vector do
   Vectors are represented as lists of numbers, i.e. `[number]'. Vector sets are represented as lists of vectors, i.e. `[[number]]`. 
 
   The input to these functions are not usually checked. For example, linear independence or counting the number of elements in a vector.
-  This is due to performance issues related to these operations. However, the library contains functions to help the user accomplish this themselves.
+  This is due to performance issues related to these operations. However, the library contains functions to help the user accomplish this task themselves.
 
   """
 
@@ -85,7 +85,7 @@ defmodule ExAlgebra.Vector do
   def sqr_magnitude(u), do: u |> dot(u)
 
   @doc """
-  Computes the normalization of a vector. This is a vector pointing in the same direction, but with magnitude 1. 
+  Computes the normalization of a vector. This is a vector pointing in the same direction, but with magnitude `1`. 
   ## Examples
       iex> ExAlgebra.Vector.normalize([1, 2, 3, 4])
       [0.18257418583505536, 0.3651483716701107, 0.5477225575051661, 0.7302967433402214]
@@ -94,7 +94,7 @@ defmodule ExAlgebra.Vector do
   def normalize(u), do: u |> scalar_multiply(1 / magnitude(u))
 
   @doc """
-  Computes the length of the line segment connecting vectors u and v.
+  Computes the length of the line segment connecting vectors `u` and `v`.
   ## Examples
       iex> ExAlgebra.Vector.distance([1, 2, 3], [4, 5, 6])
       5.196152422706632
@@ -116,7 +116,7 @@ defmodule ExAlgebra.Vector do
 
 
   @doc """
-  Computes the scalar projection of u onto v. This is the length of the orthogonal projection of u onto v.
+  Computes the scalar projection of `u` onto `v`. This is the length of the orthogonal projection of `u` onto `v`.
   ## Examples
       iex> ExAlgebra.Vector.scalar_projection([4, 1], [2, 3])
       3.05085107923876     
@@ -125,7 +125,7 @@ defmodule ExAlgebra.Vector do
   def scalar_projection(u, v), do: dot(u, v) / magnitude(v)
 
   @doc """
-  Computes the vector projection of a pair of vectors u, v. This is the orthogonal projection of u onto v.
+  Computes the vector projection of a pair of vectors `u, v`. This is the orthogonal projection of `u` onto `v`.
   ## Examples
       iex> ExAlgebra.Vector.vector_projection([0, 1, 1, 0], [1, 2, 4, 0])
       [0.2857142857142857, 0.5714285714285714, 1.1428571428571428, 0.0]
@@ -137,7 +137,7 @@ defmodule ExAlgebra.Vector do
 
   @doc """
   Computes a vector based on an input vector that is orthogonal to each vector in the set of linearly independent vectors. The input vector must also
-  form a linearly independent set when it is part of the linearly independent vectors. Use ExAlgebra.Vector.is_linearly_independent? to test
+  form a linearly independent set when it is part of the linearly independent vectors. Use `ExAlgebra.Vector.is_linearly_independent?` to test
   for linear independence. 
   ## Examples
       iex> ExAlgebra.Vector.create_orthogonal_vector([0, 1, 1, 0], [[1, 2, 4, 0]])
@@ -149,7 +149,7 @@ defmodule ExAlgebra.Vector do
   end
   
   @doc """
-  Computes an orthogonal basis from a set of linearly independent vectors. Use ExAlgebra.Vector.is_linearly_independent? to test
+  Computes an orthogonal basis from a set of linearly independent vectors. Use `ExAlgebra.Vector.is_linearly_independent?` to test
   for linear independence.
   ## Examples
       iex> ExAlgebra.Vector.create_orthogonal_basis([[1, 2, 4, 0], [0, 1, 1, 0], [0, 3, 1, 4]])
@@ -163,7 +163,7 @@ defmodule ExAlgebra.Vector do
   end
 
   @doc """
-  Computes an orthonormal basis from a set of linearly independent vectors. This is the modified version of the Gram–Schmidt process. 
+  Computes an orthonormal basis from a set of linearly independent vectors. This is the modified version of the *Gram–Schmidt* process. 
   Use ExAlgebra.Vector.is_linearly_independent? to test for linear independence.
   ## Examples
       iex> ExAlgebra.Vector.create_orthonormal_basis([[1, 1, 1], [2, 1, 0], [5, 1, 3]])
