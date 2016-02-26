@@ -13,7 +13,8 @@ defmodule ExAlgebra.Matrix do
   alias ExAlgebra.Vector, as: Vector
 
   @doc """
-  Computes the rank of a matrix. Both the row rank and the column rank are returned as a map. 
+  Computes the rank of a matrix. Both the row rank and the column rank are
+  returned as a map. 
   ##### Examples
       iex> ExAlgebra.Matrix.rank([[1, 2], [3, 4], [4, 3]])
       %{rows: 3, columns: 2}
@@ -24,7 +25,8 @@ defmodule ExAlgebra.Matrix do
   end
 
   @doc """
-  Computes the addition of two matrices. This is a new matrix with entries equal to the sum of the pair of matrices's corresponding entries.   
+  Computes the addition of two matrices. This is a new matrix with entries equal 
+  to the sum of the pair of matrices's corresponding entries. 
   The input matrices should have the same rank.
   ##### Examples
       iex> ExAlgebra.Matrix.add([[1, 3, 1], [1, 0, 0]], [[0, 0, 5], [7, 5, 0]])
@@ -37,7 +39,8 @@ defmodule ExAlgebra.Matrix do
   end
 
   @doc """
-  Computes the subtraction of two matrices. This is a new matrix with entries equal to the difference of the pair of matrices's corresponding entries.   
+  Computes the subtraction of two matrices. This is a new matrix with entries 
+  equal to the difference of the pair of matrices's corresponding entries.   
   The input matrices should have the same rank.
   ##### Examples
       iex> ExAlgebra.Matrix.subtract([[1, 3, 1], [1, 0, 0]], [[0, 0, 5], [7, 5, 0]])
@@ -62,7 +65,9 @@ defmodule ExAlgebra.Matrix do
   end
 
   @doc """
-  Computes the transpose of a matrix. This is the matrix A<sup>t</sup> built from the matrix A where the entries A<sub>ij</sub> have been mapped to A<sub>ji</sub>.
+  Computes the transpose of a matrix. This is the matrix A<sup>t</sup> built 
+  from the matrix A where the entries A<sub>ij</sub> have been mapped 
+  to A<sub>ji</sub>.
   ##### Examples
       iex> ExAlgebra.Matrix.transpose([[1, 3, 1], [1, 0, 0]])
       [[1, 1], [3, 0], [1, 0]]
@@ -73,7 +78,8 @@ defmodule ExAlgebra.Matrix do
   end
 
   @doc """
-  Computes the multiplication of two matrices. If the rank of matrix A is `n x m`, then the rank of matrix B must be `m x n`.
+  Computes the multiplication of two matrices. If the rank of matrix A is 
+  `n x m`, then the rank of matrix B must be `m x n`.
   ##### Examples
       iex> ExAlgebra.Matrix.multiply([[2, 3, 4], [1, 0, 0]], [[0, 1000], [1, 100], [0, 10]])
       [[3, 2340], [0, 1000]]
@@ -84,7 +90,8 @@ defmodule ExAlgebra.Matrix do
   end
 
   @doc """
-  Returns the `(i, j)` submatrix of a matrix. This is the matrix with the i<sup>th</sup> row and j<sup>th</sup> column removed.
+  Returns the `(i, j)` submatrix of a matrix. This is the matrix with the 
+  i<sup>th</sup> row and j<sup>th</sup> column removed.
   ##### Examples
       iex> ExAlgebra.Matrix.submatrix([[2, 3, 4], [1, 0, 0], [3, 4, 5]], 2, 3)
       [[2, 3], [3, 4]]
@@ -117,7 +124,8 @@ defmodule ExAlgebra.Matrix do
   end
 
   @doc """
-  Computes the determinant of a matrix. This is computed by summing the cofactors of the matrix multiplied by corresponding elements of the first row.
+  Computes the determinant of a matrix. This is computed by summing the cofactors 
+  of the matrix multiplied by corresponding elements of the first row.
   ##### Examples
       iex> ExAlgebra.Matrix.det([[6, 1, 1], [4, -2, 5], [2, 8, 7]])
       -306.0
@@ -131,7 +139,8 @@ defmodule ExAlgebra.Matrix do
   end
 
   @doc """
-  Computes the `(i, j)` cofactor of a matrix. This is equal to the `(i, j)` minor of a matrix multiplied by `-1` raised to the power of `i + j`.
+  Computes the `(i, j)` cofactor of a matrix. This is equal to the `(i, j)` minor 
+  of a matrix multiplied by `-1` raised to the power of `i + j`.
   ##### Examples
       iex> ExAlgebra.Matrix.cofactor( [[2, 3, 4], [1, 0, 0], [3, 4, 5]], 1, 2)
       -5.0
@@ -140,7 +149,8 @@ defmodule ExAlgebra.Matrix do
   def cofactor(matrix, i, j), do: minor(matrix, i, j) * pow(-1, i + j)
 
   @doc """
-  Computes the `(i, j)` minor of a matrix. This is the determinant of a matrix whose i<sup>th</sup> row and j<sup>th</sup> column have been removed.
+  Computes the `(i, j)` minor of a matrix. This is the determinant of a matrix 
+  whose i<sup>th</sup> row and j<sup>th</sup> column have been removed.
   ##### Examples
       iex> ExAlgebra.Matrix.minor( [[2, 3, 4], [1, 0, 0], [3, 4, 5]], 1, 2)
       5.0
@@ -149,7 +159,8 @@ defmodule ExAlgebra.Matrix do
   def minor(matrix, i, j), do: matrix |> submatrix(i, j) |> det
 
   @doc """
-  Computes the the trace of a matrix. This is the sum of the elements down the diagonal of a matrix.
+  Computes the the trace of a matrix. This is the sum of the elements down the 
+  diagonal of a matrix.
   ##### Examples
       iex> ExAlgebra.Matrix.trace([[6, 1, 1], [4, -2, 5], [2, 8, 7]])
       11
