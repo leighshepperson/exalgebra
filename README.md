@@ -1,19 +1,22 @@
 # ExAlgebra
 
-##### Vector
+Linear Algebra library.
 
+##### Vector
 Functions that operate on vectors and vector sets. 
 
-Vectors are represented as lists of numbers, i.e. `[number]'. Vector sets are represented as lists of vectors, i.e. `[[number]]`. 
+Vectors are represented as lists of numbers `[number]`. 
 
-The input to these functions are not usually checked. For example, linear independence of a vector set or counting the number of elements in a vector.The library contains functions to help the user accomplish these tasks themselves.
+Vector sets are represented as lists of vectors `[[number]]`.
 
 ##### Matrix
 Functions that operate on matrices. 
 
-Matrices are represented as lists of lists numbers, i.e. `[[number]]'. The rows are represented by the inner lists and the columns are represented by the elements of the inner lists. This means the length of the inner lists must all be the same.
+Matrices are represented as lists of lists of numbers `[[number]]`. 
 
-The input to these functions are not usually checked. For example, the number of rows and columns of a matrix. The library contains functions to help the user accomplish these tasks themselves.
+Rows are represented by the inner lists.
+
+Columns are represented by the elements of the inner lists. 
 
 ## Installation
 
