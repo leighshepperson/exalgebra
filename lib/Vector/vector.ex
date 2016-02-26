@@ -2,22 +2,17 @@ defmodule ExAlgebra.Vector do
   @moduledoc """
   Functions that operate on vectors and vector sets. 
 
-  Vectors are represented as lists of numbers, i.e. `[number]'. Vector sets are represented as lists of vectors, i.e. `[[number]]`. 
+  Vectors are represented as lists of numbers `[number]`. 
 
-  The input to these functions are not usually checked. For example, linear independence or counting the number of elements in a vector.
-  This is due to performance issues related to these operations. However, the library contains functions to help the user accomplish this task themselves.
-
+  Vector sets are represented as lists of vectors `[[number]]`.
   """
 
   import :math, only: [sqrt: 1]
   alias ExAlgebra.Matrix, as: Matrix
 
   @doc """
-  Computes the addition of two vectors. This is a new vector with entries equal to the sum of the pair of vector's corresponding entries. 
-  The input vectors should have the same length: Since the time taken to compute the length of a list increases linearly we do
-  not check the length of the inputs before calculation. However, if the input vectors are of different size, a clause match
-  error will be thrown. 
-  ## Examples
+  Computes the addition of two vectors. This is a new vector with entries equal to the sum of the pair of vector's corresponding entries.
+  ##### Examples
       iex> ExAlgebra.Vector.add([1, 2, 3], [2, 3, 4])
       [3, 5, 7]
   """
@@ -28,11 +23,8 @@ defmodule ExAlgebra.Vector do
   end
 
   @doc """
-  Computes the subtraction of two vectors. This is a new vector with entries equal to the difference of the pair of vector's corresponding entries. 
-  The input vectors should have the same length: Since the time taken to compute the length of a list increases linearly we do
-  not check the length of the inputs before calculation. However, if the input vectors are of different size, a clause match
-  error will be thrown. 
-  ## Examples
+  Computes the subtraction of two vectors. This is a new vector with entries equal to the difference of the pair of vector's corresponding entries.
+  ##### Examples
       iex> ExAlgebra.Vector.subtract([1, 2, 3], [2, 3, 4])
       [-1, -1, -1]
   """
@@ -44,7 +36,7 @@ defmodule ExAlgebra.Vector do
 
   @doc """
   Computes the multiple of a vector by a scalar value.
-  ## Examples
+  ##### Examples
       iex> ExAlgebra.Vector.scalar_multiply([1, 2, 3], 2.5)
       [2.5, 5.0, 7.5]
   """
@@ -52,11 +44,8 @@ defmodule ExAlgebra.Vector do
   def scalar_multiply(u, scalar), do: u |> Enum.map(&(&1 * scalar))
 
   @doc """
-  Computes the dot product of a pair of vectors. This is the sum of the products of the pair of vector's corresponding entries. 
-  The input vectors should have the same length: Since the time taken to compute the length of a list increases linearly we do
-  not check the length of the inputs before calculation. However, if the input vectors are of different size, a clause match
-  error will be thrown. 
-  ## Examples
+  Computes the dot product of a pair of vectors. This is the sum of the products of the pair of vector's corresponding entries.
+  ##### Examples
       iex> ExAlgebra.Vector.dot([1, 2, 3], [2, 3, 4])
       20
   """
@@ -68,7 +57,7 @@ defmodule ExAlgebra.Vector do
   
   @doc """
   Computes the magnitude of a vector. This is also known as the length of a vector.
-  ## Examples
+  ##### Examples
       iex> ExAlgebra.Vector.magnitude([1, 2, 3, 4])
       5.477225575051661
   """
@@ -77,7 +66,7 @@ defmodule ExAlgebra.Vector do
 
   @doc """
   Computes the square of the magnitude of a vector. This avoids the expensive square root operation.
-  ## Examples
+  ##### Examples
       iex> ExAlgebra.Vector.sqr_magnitude([1, 2, 3, 4])
       30
   """
@@ -86,7 +75,7 @@ defmodule ExAlgebra.Vector do
 
   @doc """
   Computes the normalization of a vector. This is a vector pointing in the same direction, but with magnitude `1`. 
-  ## Examples
+  ##### Examples
       iex> ExAlgebra.Vector.normalize([1, 2, 3, 4])
       [0.18257418583505536, 0.3651483716701107, 0.5477225575051661, 0.7302967433402214]
   """
@@ -94,8 +83,8 @@ defmodule ExAlgebra.Vector do
   def normalize(u), do: u |> scalar_multiply(1 / magnitude(u))
 
   @doc """
-  Computes the length of the line segment connecting vectors `u` and `v`.
-  ## Examples
+  Computes the length of the line segment connecting a pair of vectors.
+  ##### Examples
       iex> ExAlgebra.Vector.distance([1, 2, 3], [4, 5, 6])
       5.196152422706632
   """
@@ -104,7 +93,7 @@ defmodule ExAlgebra.Vector do
 
   @doc """
   Returns true if and only if a pair of vectors are orthogonal. This is equivalent to a pair of vectors being perpendicular in Euclidian space.
-  ## Examples
+  ##### Examples
       iex> ExAlgebra.Vector.is_orthogonal?([1, 1, 1], [-2, 1, 1])
       true
 
@@ -117,7 +106,7 @@ defmodule ExAlgebra.Vector do
 
   @doc """
   Computes the scalar projection of `u` onto `v`. This is the length of the orthogonal projection of `u` onto `v`.
-  ## Examples
+  ##### Examples
       iex> ExAlgebra.Vector.scalar_projection([4, 1], [2, 3])
       3.05085107923876     
   """
@@ -126,7 +115,7 @@ defmodule ExAlgebra.Vector do
 
   @doc """
   Computes the vector projection of a pair of vectors `u, v`. This is the orthogonal projection of `u` onto `v`.
-  ## Examples
+  ##### Examples
       iex> ExAlgebra.Vector.vector_projection([0, 1, 1, 0], [1, 2, 4, 0])
       [0.2857142857142857, 0.5714285714285714, 1.1428571428571428, 0.0]
   """
@@ -136,10 +125,8 @@ defmodule ExAlgebra.Vector do
   end
 
   @doc """
-  Computes a vector based on an input vector that is orthogonal to each vector in the set of linearly independent vectors. The input vector must also
-  form a linearly independent set when it is part of the linearly independent vectors. Use `ExAlgebra.Vector.is_linearly_independent?` to test
-  for linear independence. 
-  ## Examples
+  Creates an orthogonal vector from an input vector that is linearly independent to each vector in a set of linearly independent vectors.
+  ##### Examples
       iex> ExAlgebra.Vector.create_orthogonal_vector([0, 1, 1, 0], [[1, 2, 4, 0]])
       [-0.2857142857142857, 0.4285714285714286, -0.1428571428571428, 0.0]
   """
@@ -149,13 +136,12 @@ defmodule ExAlgebra.Vector do
   end
   
   @doc """
-  Computes an orthogonal basis from a set of linearly independent vectors. Use `ExAlgebra.Vector.is_linearly_independent?` to test
-  for linear independence.
-  ## Examples
+  Computes an orthogonal basis from a set of linearly independent vectors.
+  ##### Examples
       iex> ExAlgebra.Vector.create_orthogonal_basis([[1, 2, 4, 0], [0, 1, 1, 0], [0, 3, 1, 4]])
       [[1, 2, 4, 0],
-            [-0.2857142857142857, 0.4285714285714286, -0.1428571428571428, 0.0],
-            [0.6666666666666664, 0.3333333333333335, -0.3333333333333336, 4.0]]
+        [-0.2857142857142857, 0.4285714285714286, -0.1428571428571428, 0.0],
+        [0.6666666666666664, 0.3333333333333335, -0.3333333333333336, 4.0]]
   """
   @spec create_orthogonal_basis([[number]]) :: [[number]]
   def create_orthogonal_basis([u | remaining_vectors] = _linearly_independent_vectors) do
@@ -163,9 +149,8 @@ defmodule ExAlgebra.Vector do
   end
 
   @doc """
-  Computes an orthonormal basis from a set of linearly independent vectors. This is the modified version of the *Gram–Schmidt* process. 
-  Use ExAlgebra.Vector.is_linearly_independent? to test for linear independence.
-  ## Examples
+  Computes an orthonormal basis from a set of linearly independent vectors. This uses the modified version of the *Gram–Schmidt* process.
+  ##### Examples
       iex> ExAlgebra.Vector.create_orthonormal_basis([[1, 1, 1], [2, 1, 0], [5, 1, 3]])
       [[0.5773502691896258, 0.5773502691896258, 0.5773502691896258], [0.7071067811865475, 0.0, -0.7071067811865475], [0.4082482904638631, -0.8164965809277261, 0.4082482904638631]]
   """
@@ -176,12 +161,12 @@ defmodule ExAlgebra.Vector do
 
   @doc """
   Returns true if and only if a set of vectors are linearly independent.
-  ## Examples
-    iex> ExAlgebra.Vector.is_linearly_independent?([[1, 1, 1], [2, 1, 0], [5, 1, 3]])
-    true
+  ##### Examples
+      iex> ExAlgebra.Vector.is_linearly_independent?([[1, 1, 1], [2, 1, 0], [5, 1, 3]])
+      true
 
-    iex> ExAlgebra.Vector.is_linearly_independent?([[2, 3, 5], [-1, -4, -10], [1, -2, -8]])
-    false
+      iex> ExAlgebra.Vector.is_linearly_independent?([[2, 3, 5], [-1, -4, -10], [1, -2, -8]])
+      false
   """
   @spec is_linearly_independent?([[number]]) :: boolean
   def is_linearly_independent?(vectors), do: Matrix.det(vectors) != 0
