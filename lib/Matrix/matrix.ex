@@ -170,6 +170,66 @@ defmodule ExAlgebra.Matrix do
     matrix |> Enum.with_index |> Enum.map(fn({row, index}) -> Enum.at(row, index) end) |> Enum.sum
   end
 
+  @doc """
+  Generates a matrix based on a generator function that depends on the position of the matrix element. 
+  ##### Examples
+      iex> ExAlgebra.Matrix.generate_matrix(fn(i, j) -> i + j end, 3, 3)
+      [[2, 3, 4], [3, 4, 5], [4, 5, 6]]
+
+      iex> ExAlgebra.Matrix.generate_matrix(fn(i, j) -> i * j end, 4, 3)
+      [[1, 2, 3], [2, 4, 6], [3, 6, 9], [4, 8, 12]]
+  """
+  @spec generate_matrix(((number, number) -> number), number, number) :: [[number]]
+  def generate_matrix(_generator_fun, number_of_rows, _number_of_columns) when number_of_rows == 0, do: []
+  def generate_matrix(generator_fun, number_of_rows, number_of_columns) do
+    generate_matrix(generator_fun, number_of_rows - 1, number_of_columns) ++ [generate_row(generator_fun, number_of_rows, number_of_columns)]
+  end
+
+  @spec lu_decomposition([[number]]) :: map
+  def lu_decomposition([[h | t] | remaining_rows] = matrix) do
+  m = [{[[h | t]], [[1.0]] ++ transform_column(remaining_rows, h)} | lu_decomposition(subtract(submatrix(matrix, 1, 1), transform_column(remaining_rows, h) |> multiply [t]), 1)]
+  
+  IO.inspect(h(m))
+  IO.inspect(transpose(h(m)))
+  %{u: g(m), l: transpose(h(m))}
+
+  end
+
+  def g([]), do: []
+  def g([{a, b} | remaining_rows]) do
+    a ++ g(remaining_rows)
+  end
+
+
+  def h([]), do: []
+  def h([{a, b} | remaining_rows]) do
+     Enum.into([b],  h(remaining_rows))
+  end
+
+   def lu_decomposition([[h | t] | remaining_rows] = matrix, append) do
+   ta =  for n <- 0..(append - 1), do: 0
+   tal = for n <- 0..(append - 1), do: [0.0] 
+   tal = tal ++ [[1.0]]
+
+   [{  [ta ++ [h | t]], tal ++ transform_column(remaining_rows, h) } | lu_decomposition(subtract(submatrix(matrix, 1, 1), transform_column(remaining_rows, h) |> multiply [t]), append + 1)]
+  end
+
+  def lu_decomposition([], _append), do: []
+
+  def transform_column([[h1 | _] | _ = remaining_rows], h) do
+
+    [[h1 / h] | transform_column(remaining_rows, h)]
+  end
+ def transform_column([], _) do
+[]
+ end
+
+  @spec generate_row(((number, number) -> number), number, number) :: [number]
+  defp generate_row(_generator_fun, _row_index, 0), do: []
+  defp generate_row(generator_fun, row_index, number_of_columns) do
+    generate_row(generator_fun, row_index, number_of_columns - 1) ++ [generator_fun.(row_index, number_of_columns)]
+  end
+
   @spec naive_multiply([[number]], [[number]]) :: [[number]]
   defp naive_multiply(matrix_one, matrix_two) do
     matrix_one |> List.foldl([], fn(row, acc) -> acc ++ [matrix_two |> Enum.map(&Vector.dot(&1, row))] end)

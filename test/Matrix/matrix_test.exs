@@ -59,6 +59,7 @@ defmodule ExAlgebra.MatrixTest do
     expected = [[1, 0], [2, -6], [3, 7]]
 
     assert transpose(matrix) == expected
+
   end
 
   test "Returns the transpose of a 3 x 2 matrix" do
@@ -178,4 +179,33 @@ defmodule ExAlgebra.MatrixTest do
     assert trace(matrix) == expected
   end
 
+  test "Generates a 3 x 3 matrix given a generator function that adds the indices" do
+    generator_function = fn(i, j) -> i + j end
+    expected = [[2, 3, 4], [3, 4, 5], [4, 5, 6]]
+
+    assert generate_matrix(generator_function, 3, 3) == expected
+  end
+
+  test "Generates a 1 x 1 matrix given a generator function that multiplies the indices" do
+    generator_function = fn(i, j) -> i * j end
+    expected = [[1]]
+
+    assert generate_matrix(generator_function, 1, 1) == expected
+  end
+
+  test "Generates a 4 x 3 matrix given a generator function that multiplies the indices" do
+    generator_function = fn(i, j) -> i * j end
+    expected = [[1, 2, 3], [2, 4, 6], [3, 6, 9], [4, 8, 12]]
+
+    assert generate_matrix(generator_function, 4, 3) == expected
+  end
+
+  test "Computes the LU decomposition of a 3 x 3 matrix" do
+    input = [[1, 2, 4], [3, 8, 14], [2, 6, 13]]
+
+    expected = %{l: [[1,0,0], [3, 1, 0], [2, 1, 1]], u: [[1, 2, 4], [0, 2, 2], [0, 0, 3]]}
+
+    assert lu_decomposition(input) == expected 
+
+  end
 end
