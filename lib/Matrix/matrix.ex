@@ -185,44 +185,43 @@ defmodule ExAlgebra.Matrix do
     generate_matrix(generator_fun, number_of_rows - 1, number_of_columns) ++ [generate_row(generator_fun, number_of_rows, number_of_columns)]
   end
 
-  @spec lu_decomposition([[number]]) :: map
-  def lu_decomposition([[h | t] | remaining_rows] = matrix) do
-  m = [{[[h | t]], [[1.0]] ++ transform_column(remaining_rows, h)} | lu_decomposition(subtract(submatrix(matrix, 1, 1), transform_column(remaining_rows, h) |> multiply [t]), 1)]
-  
-  IO.inspect(h(m))
-  IO.inspect(transpose(h(m)))
-  %{u: g(m), l: transpose(h(m))}
+  def lu_decomposition(matrix) do
+   [_, upper_matrix, lower_matrix_transposed] = lu_decomposition_unfolded(matrix) 
+   |> List.foldl([0, [], []], fn(element, [index, upper_matrix, lower_matrix_transposed]) -> 
+        [index + 1, 
+          upper_matrix ++ [hd(element) |> prepend_zeros(index)], 
+          lower_matrix_transposed ++ [[1 | hd(tl(element))] |> prepend_zeros(index)]
+        ]
+      end)
 
+   %{u: upper_matrix, l: transpose(lower_matrix_transposed)}
   end
 
-  def g([]), do: []
-  def g([{a, b} | remaining_rows]) do
-    a ++ g(remaining_rows)
+  def lu_decomposition_unfolded([]),  
+    do: []
+  def lu_decomposition_unfolded([[x|_] | _] = matrix) when x == 0 or abs(x) < 0.001,  
+    do: (matrix |> partial_pivot) |> lu_decomposition_unfolded
+  def lu_decomposition_unfolded([upper_matrix_row | remaining_rows])  do
+     [lower_matrix_transposed_row, submatrix] = remaining_rows 
+     |> List.foldl([[],[]], fn element, [lower_matrix_transposed_row, submatrix] -> 
+          quotient = hd(element) / hd(upper_matrix_row)
+
+          [lower_matrix_transposed_row ++ [quotient], 
+            submatrix ++ [tl(element) 
+            |> Vector.subtract(tl(upper_matrix_row) 
+            |> Vector.scalar_multiply(quotient))]]
+        end)
+
+     [[upper_matrix_row, lower_matrix_transposed_row] | lu_decomposition_unfolded(submatrix)]
   end
 
-
-  def h([]), do: []
-  def h([{a, b} | remaining_rows]) do
-     Enum.into([b],  h(remaining_rows))
+  defp partial_pivot(matrix) do 
+    matrix |> Enum.sort_by(fn([h|_]) -> -abs(h) end)
   end
 
-   def lu_decomposition([[h | t] | remaining_rows] = matrix, append) do
-   ta =  for n <- 0..(append - 1), do: 0
-   tal = for n <- 0..(append - 1), do: [0.0] 
-   tal = tal ++ [[1.0]]
-
-   [{  [ta ++ [h | t]], tal ++ transform_column(remaining_rows, h) } | lu_decomposition(subtract(submatrix(matrix, 1, 1), transform_column(remaining_rows, h) |> multiply [t]), append + 1)]
+  defp prepend_zeros(list, length) do
+    (Stream.iterate(0, &(&1)) |> Enum.take(length)) ++ list
   end
-
-  def lu_decomposition([], _append), do: []
-
-  def transform_column([[h1 | _] | _ = remaining_rows], h) do
-
-    [[h1 / h] | transform_column(remaining_rows, h)]
-  end
- def transform_column([], _) do
-[]
- end
 
   @spec generate_row(((number, number) -> number), number, number) :: [number]
   defp generate_row(_generator_fun, _row_index, 0), do: []
