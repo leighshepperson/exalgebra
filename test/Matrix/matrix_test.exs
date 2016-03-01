@@ -214,7 +214,7 @@ defmodule ExAlgebra.MatrixTest do
     assert lu_decomposition(input) == expected
 
     input = [[1, 1, -2], [1, 3, -1], [1, 5, 1]]
-    
+
   end
 
   test "If the matrix contains a small value on the pivot row, then the LU decomposition succeeds" do
@@ -224,7 +224,12 @@ defmodule ExAlgebra.MatrixTest do
 
     assert lu_decomposition(input) == expected
 
-  end
+    input = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
+    expected = [32]
+
+    assert lu_decomposition(input) == expected
+
+  end
 
 end

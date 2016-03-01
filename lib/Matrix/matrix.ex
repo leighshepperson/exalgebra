@@ -12,6 +12,12 @@ defmodule ExAlgebra.Matrix do
   import :math, only: [pow: 2]
   alias ExAlgebra.Vector, as: Vector
 
+  @tolerance 0.001
+
+  defmodule PivotError do
+    defexception message: "Pivot error. A pivot row was outside the tolerance or no LU decomposition exists."
+  end
+
   @doc """
   Computes the rank of a matrix. Both the row rank and the column rank are
   returned as a map. 
@@ -186,38 +192,53 @@ defmodule ExAlgebra.Matrix do
   end
 
   def lu_decomposition(matrix) do
-   [_, upper_matrix, lower_matrix_transposed] = lu_decomposition_unfolded(matrix) 
-   |> List.foldl([0, [], []], fn(element, [index, upper_matrix, lower_matrix_transposed]) -> 
-        [index + 1, 
-          upper_matrix ++ [hd(element) |> prepend_zeros(index)], 
-          lower_matrix_transposed ++ [[1 | hd(tl(element))] |> prepend_zeros(index)]
-        ]
-      end)
 
-   %{u: upper_matrix, l: transpose(lower_matrix_transposed)}
+    try do
+    [_, upper_matrix, lower_matrix_transposed] = lu_decomposition_unfolded(matrix) 
+      |> List.foldl([0, [], []], &bulid_lu_decomposition(&1, &2))
+   
+    %{u: upper_matrix, l: transpose(lower_matrix_transposed)}
+    
+    rescue 
+        e in PivotError -> e
+    end
   end
 
-  def lu_decomposition_unfolded([]),  
-    do: []
-  def lu_decomposition_unfolded([[x|_] | _] = matrix) when x == 0 or abs(x) < 0.001,  
-    do: (matrix |> partial_pivot) |> lu_decomposition_unfolded
-  def lu_decomposition_unfolded([upper_matrix_row | remaining_rows])  do
-     [lower_matrix_transposed_row, submatrix] = remaining_rows 
-     |> List.foldl([[],[]], fn element, [lower_matrix_transposed_row, submatrix] -> 
-          quotient = hd(element) / hd(upper_matrix_row)
-
-          [lower_matrix_transposed_row ++ [quotient], 
-            submatrix ++ [tl(element) 
-            |> Vector.subtract(tl(upper_matrix_row) 
-            |> Vector.scalar_multiply(quotient))]]
-        end)
-
-     [[upper_matrix_row, lower_matrix_transposed_row] | lu_decomposition_unfolded(submatrix)]
+  defp bulid_lu_decomposition([sparse_upper_row | [sparse_lower_row]], [index, partial_upper_matrix, partial_lower_matrix]) do
+      [index + 1, partial_upper_matrix ++ [sparse_upper_row |> prepend_zeros(index)], 
+      partial_lower_matrix ++ [[1 | sparse_lower_row] |> prepend_zeros(index)]]
   end
 
-  defp partial_pivot(matrix) do 
-    matrix |> Enum.sort_by(fn([h|_]) -> -abs(h) end)
+  
+  def lu_decomposition_unfolded([]), do: []
+  def lu_decomposition_unfolded([[pivot_element|_] | _] = matrix) when abs(pivot_element) <= @tolerance do
+    (matrix |> partial_pivot) |> lu_decomposition_unfolded
   end
+  def lu_decomposition_unfolded([upper_row | remaining_rows])  do
+     [lower_row, submatrix] = remaining_rows 
+     |> List.foldl([[],[]], &partial_lu_decomposition(upper_row, &1, hd(&2), hd(tl(&2))))
+
+     [[upper_row, lower_row] | lu_decomposition_unfolded(submatrix)]
+  end
+
+  defp partial_pivot(matrix) do  
+      matrix |> Enum.sort_by(&(-abs(hd(&1)))) |> partial_pivot_check!
+  end
+
+  defp partial_pivot_check!([[h | _] | _]) when abs(h) <= @tolerance, do: raise PivotError
+  defp partial_pivot_check!(matrix), do: matrix
+
+  defp partial_lu_decomposition(first_row, current_row, partial_lower_row, partial_submatrix) do
+      quotient = divide_heads(current_row, first_row)
+
+      [partial_lower_row ++ [quotient], partial_submatrix ++ [subtract_tails(current_row, first_row, quotient)]]
+  end
+
+  defp subtract_tails([_ | tail_one], [_ | tail_two], scalar) do
+    tail_one |> Vector.subtract(tail_two |> Vector.scalar_multiply(scalar))
+  end
+
+  defp divide_heads([head_one |_], [head_two |_]), do: head_one / head_two
 
   defp prepend_zeros(list, length) do
     (Stream.iterate(0, &(&1)) |> Enum.take(length)) ++ list
