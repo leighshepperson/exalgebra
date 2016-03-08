@@ -1,6 +1,6 @@
 # ExAlgebra
 
-Collects functions used in linear algebra.
+This library collects a host of common functions that can be used in linear algebraic computations.
 
 ##### Vector
 Functions that perform computations on vectors.
