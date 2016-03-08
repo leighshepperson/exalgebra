@@ -1,6 +1,6 @@
 # ExAlgebra
 
-This library collects a host of common functions that can be used in linear algebraic computations.
+Collects functions used in linear algebra.
 
 ##### Vector
 Functions that perform computations on vectors.
@@ -18,7 +18,7 @@ The package is [available in Hex](https://hex.pm/packages/exalgebra), and it can
   1. Add exalgebra to your list of dependencies in `mix.exs`:
 
         def deps do
-          [{:exalgebra, "~> 0.0.3"}]
+          [{:exalgebra, "~> 0.0.4"}]
         end
 
   2. Ensure exalgebra is started before your application:
