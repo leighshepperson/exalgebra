@@ -3,11 +3,11 @@ defmodule ExAlgebra.Mixfile do
 
   def project do
     [app: :exalgebra,
-     version: "0.0.3",
+     version: "0.0.4",
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps, 
+     deps: deps,
      description: description,
      package: package]
   end
@@ -17,7 +17,7 @@ defmodule ExAlgebra.Mixfile do
   end
 
   defp deps do
-    [{:eye_drops, "~> 1.0.0"}, 
+    [{:eye_drops, "~> 1.0.0"},
      {:credo, "~> 0.3", only: [:dev, :test]},
      {:earmark, "~> 0.1", only: :dev},
      {:ex_doc, "~> 0.11", only: :dev}]
@@ -25,7 +25,7 @@ defmodule ExAlgebra.Mixfile do
 
   defp description do
     """
-    Linear Algebra library.
+    This library collects a host of common functions that can be used in linear algebraic computations.
     """
   end
 

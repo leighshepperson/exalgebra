@@ -103,7 +103,7 @@ defmodule ExAlgebra.VectorTest do
 		assert approximate_evaluation(create_orthogonal_basis(vectors)) == approximate_evaluation(expected)
 	end
 
-	test "Returns an orthonormal basis from a set of linearly independent vectors" do	
+	test "Returns an orthonormal basis from a set of linearly independent vectors" do
 		vectors = [[1, 1, 1], [2, 1, 0], [5, 1, 3]]
 		expected = [[0.57735026919, 0.57735026919, 0.57735026919], [0.70710678118, 0, -0.70710678118], [0.40824829046, -0.81649658092, 0.40824829046]]
 		assert approximate_evaluation(create_orthonormal_basis(vectors)) == approximate_evaluation(expected)
@@ -117,6 +117,16 @@ defmodule ExAlgebra.VectorTest do
 	test "Retrns false if a set of vectors are linearly dependent" do
 		vectors = [[2, 3, 5], [-1, -4, -10], [1, -2, -8]]
 		assert !is_linearly_independent?(vectors)
+	end
+
+	test "Computes the angle between two vectors" do
+		vector_one = [3, 4]
+		vector_two = [-8, 6]
+		assert angle(vector_one, vector_two) == 1.5707963267948966
+
+		vector_one = [9, 2, 7]
+		vector_two = [4, 8, 10]
+		assert angle(vector_one, vector_two) == 0.6672196386878
 	end
 
 	defp approximate_evaluation([h|t]) do

@@ -1,22 +1,15 @@
 # ExAlgebra
 
-Linear Algebra library.
+This library collects a host of common functions that can be used in linear algebraic computations.
 
 ##### Vector
-Functions that operate on vectors and vector sets. 
+Functions that perform computations on vectors.
 
-Vectors are represented as lists of numbers `[number]`. 
-
-Vector sets are represented as lists of vectors `[[number]]`.
+##### Vector3
+Functions that perform computations on 3-vectors.
 
 ##### Matrix
-Functions that operate on matrices. 
-
-Matrices are represented as lists of lists of numbers `[[number]]`. 
-
-Rows are represented by the inner lists.
-
-Columns are represented by the elements of the inner lists. 
+Functions that perform computations on matrices.
 
 ## Installation
 
