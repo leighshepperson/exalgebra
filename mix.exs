@@ -3,7 +3,7 @@ defmodule ExAlgebra.Mixfile do
 
   def project do
     [app: :exalgebra,
-     version: "0.0.4",
+     version: "0.0.5",
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -17,7 +17,7 @@ defmodule ExAlgebra.Mixfile do
   end
 
   defp deps do
-    [{:eye_drops, "~> 1.0.0"},
+    [{:eye_drops, "~> 1.2", only: [:dev]},
      {:credo, "~> 0.3", only: [:dev, :test]},
      {:earmark, "~> 0.1", only: :dev},
      {:ex_doc, "~> 0.11", only: :dev}]

@@ -1,6 +1,8 @@
 defmodule ExAlgebra.Matrix do
   @moduledoc """
-  Functions that perform computations on matrices.
+  The Exalgebra Matrix module is a collection of functions that perform computations
+  on matrices. Matrices are represented by lists of lists of numbers, where the inner lists
+  represent the rows of the matrix.
   """
 
   import :math, only: [pow: 2]
@@ -20,7 +22,7 @@ defmodule ExAlgebra.Matrix do
 
   @doc """
   Computes the addition of two matrices. This is a new matrix with entries equal
-  to the sum of the pair of matrices's corresponding entries.
+  to the sum of the two matrices's corresponding entries.
   The input matrices should have the same rank.
   ##### Examples
       iex> ExAlgebra.Matrix.add([[1, 3, 1], [1, 0, 0]], [[0, 0, 5], [7, 5, 0]])
@@ -153,7 +155,7 @@ defmodule ExAlgebra.Matrix do
   def minor(matrix, i, j), do: matrix |> submatrix(i, j) |> det
 
   @doc """
-  Computes the the trace of a matrix. This is the sum of the elements down the
+  Computes the the trace of a matrix. This is the sum of the elements accross the
   diagonal of a matrix.
   ##### Examples
       iex> ExAlgebra.Matrix.trace([[6, 1, 1], [4, -2, 5], [2, 8, 7]])
@@ -162,6 +164,17 @@ defmodule ExAlgebra.Matrix do
   @spec trace([[number]]) :: number
   def trace(matrix) do
     matrix |> Enum.with_index |> Enum.map(fn({row, index}) -> Enum.at(row, index) end) |> Enum.sum
+  end
+
+  @doc """
+  Computes the hadamard product of two matrices of equal rank.
+  ##### Examples
+      iex> ExAlgebra.Matrix.hadamard_product([[1, 2, 3], [2, 3, 4]], [[1, 3, 4], [1, 2, 3]])
+      [[1, 6, 12], [2, 6, 12]]
+  """
+  @spec hadamard_product([[number]], [[number]]) :: [[number]]
+  def hadamard_product(matrix_one, matrix_two) do
+   matrix_one |> Enum.zip(matrix_two) |> Enum.map(fn({u, v}) -> Vector.hadamard_product(u, v) end)
   end
 
   @spec naive_multiply([[number]], [[number]]) :: [[number]]

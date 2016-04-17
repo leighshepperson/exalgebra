@@ -3,7 +3,9 @@ defmodule ExAlgebra.Vector3 do
   alias ExAlgebra.Matrix, as: Matrix
 
   @moduledoc """
-  Functions that perform computations on 3-vectors.
+  The ExAlgebra Vector3 module is a collection of functions that perform
+  computations on 3-vectors. 3-vectors are represented by lists with exactly
+  three elements.
   """
 
   @doc """

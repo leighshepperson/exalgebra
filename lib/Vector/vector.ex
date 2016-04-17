@@ -1,6 +1,7 @@
 defmodule ExAlgebra.Vector do
   @moduledoc """
-  Functions that perform computations on vectors.
+  The ExAlgebra Vector module is a collection of functions that perform
+  computations on vectors. Vectors are represented by lists of numbers.
   """
 
   import :math, only: [sqrt: 1, acos: 1]
@@ -188,5 +189,19 @@ defmodule ExAlgebra.Vector do
   """
   @spec angle([number], [number]) :: number
   def angle(u, v), do: acos(dot(u, v) / (magnitude(u) * magnitude(v)))
+
+  @doc """
+  Computes the hadamard product of two vectors of equal length.
+  ##### Examples
+      iex> ExAlgebra.Vector.hadamard_product([1, 2], [3, 4])
+      [3, 8]
+
+      iex> ExAlgebra.Vector.hadamard_product([9, 2, 7], [4, 8, 10])
+      [36, 16, 70]
+  """
+  @spec hadamard_product([number], [number]) :: [number]
+  def hadamard_product(u, v) do
+    u |> Enum.zip(v) |> Enum.map(fn({x, y}) -> x*y end)
+  end
 
 end

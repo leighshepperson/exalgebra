@@ -99,10 +99,10 @@ defmodule ExAlgebra.MatrixTest do
 
     assert multiply(matrix_one, matrix_two) == expected
   end
-  
+
   test "Removes the ith row of a matrix" do
     matrix =  [[2, 3, 4], [1, 0, 0], [3, 4, 5]]
-    
+
     assert remove_row(matrix, 1) == [[1, 0, 0], [3, 4, 5]]
     assert remove_row(matrix, 2) == [[2, 3, 4], [3, 4, 5]]
     assert remove_row(matrix, 3) == [[2, 3, 4], [1, 0, 0]]
@@ -110,7 +110,7 @@ defmodule ExAlgebra.MatrixTest do
 
   test "Removes the ith column of a matrix" do
     matrix =  [[2, 3, 4], [1, 0, 0], [3, 4, 5]]
-    
+
     assert remove_column(matrix, 1) == [[3, 4], [0, 0], [4, 5]]
     assert remove_column(matrix, 2) == [[2, 4], [1, 0], [3, 5]]
     assert remove_column(matrix, 3) == [[2, 3], [1, 0], [3, 4]]
@@ -176,6 +176,15 @@ defmodule ExAlgebra.MatrixTest do
 
     expected = 11
     assert trace(matrix) == expected
+  end
+
+  test "Computes the Hadamard product of two matrices" do
+    first_matrix = [[1, 2, 3], [2, 3, 4]]
+    second_matrix = [[1, 3, 4], [1, 2, 3]]
+
+    expected = [[1, 6, 12], [2, 6, 12]]
+
+    assert hadamard_product(first_matrix, second_matrix) == expected
   end
 
 end

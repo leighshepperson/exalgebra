@@ -129,6 +129,15 @@ defmodule ExAlgebra.VectorTest do
 		assert angle(vector_one, vector_two) == 0.6672196386878
 	end
 
+	test "Computes the hadamard product of two vectors" do
+ 		vector_one = [1, 2, 3]
+ 		vector_two = [2, 3, 4]
+
+ 		expected = [2, 6, 12]
+
+ 		assert hadamard_product(vector_one, vector_two) == expected
+	end
+
 	defp approximate_evaluation([h|t]) do
 		[approximate_evaluation(h) | approximate_evaluation(t)]
 	end
