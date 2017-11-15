@@ -1,17 +1,6 @@
 # ExAlgebra
 
-The ExAlgebra library is a collection of functions that are commonly used in linear algebra. Vectors and Matrices are intuitively represented by lists. There is no validation performed by the functions in ExAlgebra as the inputs to the functions are assumed to be well defined within a reasonable scope.
-
-##### Vector
-The ExAlgebra Vector module is a collection of functions that perform
-computations on vectors. Vectors are represented by lists of numbers.
-
-##### Vector3
-The ExAlgebra Vector3 module is a collection of functions that perform computations on 3-vectors. 3-vectors are represented by lists with exactly
-three elements.
-
-##### Matrix
-The Exalgebra Matrix module is a collection of functions that perform computations on matrices. Matrices are represented by lists of lists of numbers, where the inner lists represent the rows of the matrix.
+This library is a collection of functions used in linear algebra.
 
 ## Installation
 
