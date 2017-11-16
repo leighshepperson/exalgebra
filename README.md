@@ -1,6 +1,6 @@
 # ExAlgebra
 
-This library is a set of functions used in linear algebra.
+ExAlgebra is a set of linear algebraic functions.
 
 ## Installation
 
